@@ -1,5 +1,5 @@
 ---
-title: "The relationship between Inflation rate and Interest rate, and it can influence Stock/Crypto Market"
+title: "The relationship between Inflation rate and Interest rate, and it can influence Stock and Cryptocurrency Market"
 subtitle: "Market factors can be affected by Inflation rate and Interest rate changes"
 author: 
   - Hyungsoo Parks
