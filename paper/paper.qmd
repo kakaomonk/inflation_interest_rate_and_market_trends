@@ -6,7 +6,7 @@ author:
 thanks: "Code and data are available at: LINK."
 date: today
 date-format: long
-abstract: "This paper explores the correlation between inflation rate and interest rated since both of them increased significantly last few years. Additionaly,  In thi s In the past few years, many stock items and cryptocurrencies fluctuated wildly First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This paper explores the correlation between inflation rate and interest rated since both of them increased significantly last few years and the both rates are the important factors of the global economy. Additionaly,  In thi s In the past few years, many stock items and cryptocurrencies fluctuated wildly First sentence. Second sentence. Third sentence. Fourth sentence."
 format: pdf
 number-sections: true
 toc: true
