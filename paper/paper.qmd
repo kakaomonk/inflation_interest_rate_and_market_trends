@@ -1,15 +1,15 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "The relationship between Inflation rate and Interest rate, and it can influence Stock/Crypto Market"
+subtitle: "Market factors can be affected by Inflation rate and Interest rate changes"
 author: 
-  - First author
-  - Another author
+  - Hyungsoo Parks
 thanks: "Code and data are available at: LINK."
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This paper explores the correlation between inflation rate and interest rated since both of them increased significantly last few years. Additionaly,  In thi s In the past few years, many stock items and cryptocurrencies fluctuated wildly First sentence. Second sentence. Third sentence. Fourth sentence."
 format: pdf
 number-sections: true
+toc: true
 bibliography: references.bib
 ---
 
