@@ -3,10 +3,10 @@ title: "The relationship between Inflation rate and Interest rate, and it can in
 subtitle: "Market factors can be affected by Inflation rate and Interest rate changes"
 author: 
   - Hyungsoo Parks
-thanks: "Code and data are available at: LINK."
+thanks: "Code and data are available at: https://github.com/kakaomonk/inflation_interest_rate_and_market_trends"
 date: today
 date-format: long
-abstract: "This paper explores the correlation between inflation rate and interest rated since both of them increased significantly last few years and the both rates are the important factors of the global economy. Additionaly,  In thi s In the past few years, many stock items and cryptocurrencies fluctuated wildly First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This paper explores the correlation between inflation rate and interest rated since both of them increased significantly last few years and the both rates are the important factors of the global economy. Additionaly,  In this In the past few years, many stock items and cryptocurrencies fluctuated wildly. This research studies the corellation between the inflation rate and interest rate, and how the two important factors in economy impact to the stock and cryptocurrency market. Overall, the inflation rate and interest rate can be considered for future market trends."
 format: pdf
 number-sections: true
 toc: true
@@ -19,11 +19,14 @@ bibliography: references.bib
 #| message: false
 
 library(tidyverse)
-library(palmerpenguins)
 ```
 
 
 # Introduction
+
+Throughout last few years, the inflation rate and the interest rate have been increased rampantly after pandemic, and every government tried to control the inflation rate and interest rate, but it requires a long duration to stabilize the inflation rate and interest rate since those are related to almost all factors in economy. According to... @citezzzzzz[], stabilizing the rate would take for a while.
+
+In this paper
 
 You can and should cross-reference sections and sub-sections. We use @citeR and @rohan.
 
@@ -40,13 +43,6 @@ Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 #| fig-cap: Bills of penguins
 #| echo: false
 
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
 ```
 
 Talk more about it.
@@ -60,14 +56,7 @@ And also planes (@fig-planes). (You can change the height and width, but don't w
 #| warning: false
 #| message: false
 
-analysis_data <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
 
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
-  theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
 ```
 
 Talk way more about it. 
@@ -115,8 +104,8 @@ Our results are summarized in @tbl-modelresults.
 
 library(rstanarm)
 
-first_model <-
-  readRDS(file = here::here("models/first_model.rds"))
+#first_model <-
+#  readRDS(file = here::here("models/first_model.rds"))
 ```
 
 ```{r}
@@ -126,13 +115,13 @@ first_model <-
 #| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
 #| warning: false
 
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = "mad",
-  fmt = 2
-)
+#modelsummary::modelsummary(
+#  list(
+#    "First model" = first_model
+#  ),
+#  statistic = "mad",
+#  fmt = 2
+#)
 ```
 
 
@@ -179,15 +168,15 @@ In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. Th
 #| fig-cap: "Examining how the model fits, and is affected by, the data"
 #| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
 
-pp_check(first_model) +
-  theme_classic() +
-  theme(legend.position = "bottom")
+#pp_check(first_model) +
+#  theme_classic() +
+#  theme(legend.position = "bottom")
 
-posterior_vs_prior(first_model) +
-  theme_minimal() +
-  scale_color_brewer(palette = "Set1") +
-  theme(legend.position = "bottom") +
-  coord_flip()
+#posterior_vs_prior(first_model) +
+#  theme_minimal() +
+#  scale_color_brewer(palette = "Set1") +
+#  theme(legend.position = "bottom") +
+#  coord_flip()
 ```
 
 ## Diagnostics
@@ -206,9 +195,9 @@ posterior_vs_prior(first_model) +
 #| fig-subcap: ["Trace plot", "Rhat plot"]
 #| layout-ncol: 2
 
-plot(first_model, "trace")
+#plot(first_model, "trace")
 
-plot(first_model, "rhat")
+#plot(first_model, "rhat")
 ```
 
 
