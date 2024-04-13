@@ -36,7 +36,7 @@ The remainder of this paper is structured as follows. @sec-data....
 
 # Data {#sec-data}
 
-The major 4 data set that are used in this research are Canadian@citeInflation
+The major 4 data sets in this research are "historical inflation rate in Canada"[@citeInflation], "historical interest rate in Canada"[@citeInterest], "historical NASDAQ index price"[@citeNasdaq], and "historical Bitcoin price"[@citeBitcoin]. The inflation rate
 
 Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 
