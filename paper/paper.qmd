@@ -36,6 +36,8 @@ The remainder of this paper is structured as follows. @sec-data....
 
 # Data {#sec-data}
 
+The major 4 data set that are used in this research are Canadian@citeInflation
+
 Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 
 ```{r}

@@ -9,18 +9,20 @@
 
 
 #### Workspace setup ####
-library(opendatatoronto)
 library(tidyverse)
 # [...UPDATE THIS...]
 
 #### Download data ####
 # [...ADD CODE HERE TO DOWNLOAD...]
 
-
+#### Load data ####
+raw_inflation = read_csv("data/raw_data/INDINF_LOWTARGET,INDINF_UPPTARGET,INDINF_CPI_M-sd-2014-01-01-ed-2024-03-02.csv", skip = 10) # skip first 10 rows that contain description
+# raw_interest = 
+# raw_nas
+# raw_btc
 
 #### Save data ####
 # [...UPDATE THIS...]
 # change the_raw_data to whatever name you assigned when you downloaded it.
-write_csv(the_raw_data, "inputs/data/raw_data.csv") 
 
          
