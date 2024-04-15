@@ -15,7 +15,7 @@ install.packages("here")
 install.packages("knitr")
 install.packages("truncnorm")
 install.packages("flextable")
-
+install.packages("lubridate")
 
 #### Load downloaded packages ####
 library(tidyverse)
@@ -24,6 +24,6 @@ library(here)
 library(knitr)
 library(truncnorm)
 library(flextable)
-
+library(lubridate)
 
 

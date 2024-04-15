@@ -36,7 +36,16 @@ The remainder of this paper is structured as follows. @sec-data....
 
 # Data {#sec-data}
 
-The major 4 data sets in this research are "historical inflation rate in Canada"[@citeInflation], "historical interest rate in Canada"[@citeInterest], "historical NASDAQ index price"[@citeNasdaq], and "historical Bitcoin price"[@citeBitcoin]. The inflation rate
+The major 4 data sets in this research are "historical inflation rate in Canada"[@citeInflation], "historical interest rate in Canada"[@citeInterest], "historical NASDAQ index price"[@citeNasdaq], and "historical Bitcoin price"[@citeBitcoin]. The raw historical inflation data contains quarterly inflation rate in Canada last 10 years. The raw historical interest rate contains montly interest rate in Canada last 10 years. In case of the data sets contain NASDAQ index and Bitcoin price contain monthly price data of each index.
+
+
+## Data Cleaning
+
+The raw data sets were cleaned with R[@citeR], Tidyverse[@citeTidyverse], Lubridate[@citeLubridate]. Since the inflation rate and interest rate do not change everyday, the NASDAQ index price and Bitcoin price need to be analyzed in quarterly data. The  
+
+## Variables in interest
+
+The study focuses on the correlation between the inflation rate and the interest rate in Canada, and how they impact on the stock market and cryptocurrency price. The interest variables in this study
 
 Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 
@@ -47,7 +56,6 @@ Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 
 ```
 
-Talk more about it.
 
 And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
 
