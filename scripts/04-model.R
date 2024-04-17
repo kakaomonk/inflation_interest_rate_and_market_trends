@@ -11,9 +11,12 @@
 #### Workspace setup ####
 library(tidyverse)
 library(rstanarm)
+library(arrow)
 
 #### Read data ####
 analysis_data <- read_csv("data/analysis_data/analysis_data.csv")
+
+
 
 ### Model data ####
 first_model <-
