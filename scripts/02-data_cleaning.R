@@ -34,6 +34,7 @@ cleaned_btc <- quar_btc |>
   group_by(Quarter) |>
   summarise(Close = mean(Close))
 
+# Write cleaned inflation data set
 write_csv(cleaned_nas, "data/analysis_data/cleaned_btc.csv")
 
 # Clean Inflation rate dataset
@@ -44,7 +45,7 @@ quar_inflation$Quarter <- paste0(year(quar_inflation$date), " Q", quarter(quar_i
 cleaned_inflation <- quar_inflation |>
   group_by(Quarter) |>
   summarise(Inflation = mean(INDINF_CPI_M))
-# Write cleaned inflation dataset
+# Write cleaned inflation data set
 write_csv(cleaned_inflation, "data/analysis_data/cleaned_inflation.csv")
 
 # Clean Interest rate dataset
@@ -56,6 +57,7 @@ cleaned_interest <- quar_interest |>
   group_by(Quarter) |>
   summarise(Interest = mean(V122530))
 
-write_csv(cleaned_interest, "data/analysis_data/cleaned_inflation.csv")
+# Write cleaned inflation data set
+write_csv(cleaned_interest, "data/analysis_data/cleaned_interest.csv")
 
 

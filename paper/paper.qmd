@@ -19,6 +19,8 @@ bibliography: references.bib
 #| message: false
 
 library(tidyverse)
+library(knitr)
+library(here)
 ```
 
 
@@ -41,6 +43,17 @@ The major 4 data sets in this research are "historical inflation rate in Canada"
 
 ## Data Cleaning
 
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+
+cleaned_inflation = read_csv(here("data/analysis_data/cleaned_inflation.csv"))
+cleaned_interest = read_csv(here("data/analysis_data/cleaned_interest.csv"))
+cleaned_nas = read_csv(here("data/analysis_data/cleaned_nas.csv"))
+cleaned_btc = read_csv(here("data/analysis_data/cleaned_btc.csv"))
+```
+
 The raw data sets were cleaned with R[@citeR], Tidyverse[@citeTidyverse], Lubridate[@citeLubridate]. Since the inflation rate and interest rate do not change frequently, the NASDAQ index price and Bitcoin price need to be analyzed in quarterly data. The collected daily raw NASDAQ index and Bitcoin price could be converted to quarter data by Lubridate[@citeLubridate] package.
 
 ## Variables in interest
@@ -48,7 +61,21 @@ The raw data sets were cleaned with R[@citeR], Tidyverse[@citeTidyverse], Lubrid
 The study focuses on the correlation between the inflation rate and the interest rate in Canada, and how they impact on the stock market and cryptocurrency price. The interest variables in this study are 'CPI inflation rate', 'interest rate', 'NASDAQ index close price', and 'Bitcoin close price'. 
 Note that 'CPI inflation rate' and 'interest rate' do not fluctuate as often as other variables. Thus, the study will focus on the quarter data rather than other periods.
 
-Below tables are examples of the cleaned data sets
+Below tables[@tbl-cleaneddataexamples] are examples of the cleaned data sets.
+
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-cleaneddataexamples
+#| tbl-cap: "Example of Cleaned data sets"
+#| warning: false
+
+kable(cleaned_inflation)
+kable(cleaned_interest)
+kable(cleaned_nas)
+kable(cleaned_btc)
+```
+
 
 ```{r}
 #| label: Summary of each variable
@@ -57,8 +84,6 @@ Below tables are examples of the cleaned data sets
 
 ```
 
-
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
 
 ```{r}
 #| label: fig-planes
