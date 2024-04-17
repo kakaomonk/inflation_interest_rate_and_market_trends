@@ -7,6 +7,7 @@
 
 #### Workspace setup ####
 library(tidyverse)
+library(arrow)
 
 raw_inflation = read_csv("data/raw_data/INDINF_LOWTARGET,INDINF_UPPTARGET,INDINF_CPI_M-sd-2014-06-29-ed-2024-03-02.csv", skip = 10) # skip first 10 rows that contain description
 raw_interest = read_csv("data/raw_data/Candian_Interest_Rate.csv", skip = 10)
@@ -75,3 +76,4 @@ all_cleaned <- cleaned_inflation |>
 
 # Write combined cleaned data set
 write_csv(all_cleaned, "data/analysis_data/all_cleaned.csv")
+write_parquet(all_cleaned, "data/analysis_data/all_cleaned.parquet")
