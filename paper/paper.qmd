@@ -49,7 +49,7 @@ The major 4 data sets in this research are "historical inflation rate in Canada"
 #| warning: false
 #| message: false
 
-all_cleaned = read_csv(here("data/analysis_data/all_cleaned.csv"))
+all_cleaned = read_parquet(here("data/analysis_data/all_cleaned.parquet"))
 ```
 
 The raw data sets were cleaned with R[@citeR], Tidyverse[@citeTidyverse], Lubridate[@citeLubridate]. Since the inflation rate and interest rate do not change frequently, the NASDAQ index price and Bitcoin price need to be analyzed in quarterly data. The collected daily raw NASDAQ index and Bitcoin price could be converted to quarter data by Lubridate[@citeLubridate] package.
@@ -80,9 +80,15 @@ According to [@tbl-cleaneddataexamples], all variables of interest are cleaned a
 #| warning: false
 #| message: false
 
-ggplot(all_cleaned) +
-  geom_bar()
+ggplot(all_cleaned, aes(x = Date)) +
+  geom_line(aes(y = Inflation), color = 'red') +
+  geom_line(aes(y = Interest), color = 'blue') +
+  labs(title = "Relationship between Inflation and Interest rate",
+       x = "Period", y = 'Rate(%)')
+
 ```
+According to the graph the fluctuation of both factors are similar last 10 years, so 
+
 
 ### Note
 The inflation rate and interest rate do not change as often as NASDAQ index and cryptocurrency, and the fluctuations are not severe compare to the others. On the other hand, there is a open time and close time for the stock market, but there cryptocurrency market never closes.

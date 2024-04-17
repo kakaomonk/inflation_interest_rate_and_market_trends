@@ -68,12 +68,27 @@ cleaned_interest <- quar_interest |>
 # Write cleaned inflation data set
 write_csv(cleaned_interest, "data/analysis_data/cleaned_interest.csv")
 
+# Create a column of dates for each quarter manually 
+Date = c(as.Date("2014-07-01"), as.Date("2014-10-01"), 
+         as.Date("2015-01-01"), as.Date("2015-04-01"), as.Date("2015-07-01"), as.Date("2015-10-01"), 
+         as.Date("2016-01-01"), as.Date("2016-04-01"), as.Date("2016-07-01"), as.Date("2016-10-01"),
+         as.Date("2017-01-01"), as.Date("2017-04-01"), as.Date("2017-07-01"), as.Date("2017-10-01"),
+         as.Date("2018-01-01"), as.Date("2018-04-01"), as.Date("2018-07-01"), as.Date("2018-10-01"),
+         as.Date("2019-01-01"), as.Date("2019-04-01"), as.Date("2019-07-01"), as.Date("2019-10-01"),
+         as.Date("2020-01-01"), as.Date("2020-04-01"), as.Date("2020-07-01"), as.Date("2020-10-01"),
+         as.Date("2021-01-01"), as.Date("2021-04-01"), as.Date("2021-07-01"), as.Date("2021-10-01"),
+         as.Date("2022-01-01"), as.Date("2022-04-01"), as.Date("2022-07-01"), as.Date("2022-10-01"),
+         as.Date("2023-01-01"), as.Date("2023-04-01"), as.Date("2023-07-01"), as.Date("2023-10-01")
+         )
+
 # Combine all dataset
 all_cleaned <- cleaned_inflation |>
   inner_join(cleaned_interest, by = "Quarter") |>
   inner_join(cleaned_nas, by = "Quarter") |>
-  inner_join(cleaned_btc, by = "Quarter")
+  inner_join(cleaned_btc, by = "Quarter") |>
+  mutate(date)
+
+
 
 # Write combined cleaned data set
-write_csv(all_cleaned, "data/analysis_data/all_cleaned.csv")
 write_parquet(all_cleaned, "data/analysis_data/all_cleaned.parquet")
