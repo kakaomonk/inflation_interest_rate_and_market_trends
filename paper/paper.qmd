@@ -41,16 +41,17 @@ The major 4 data sets in this research are "historical inflation rate in Canada"
 
 ## Data Cleaning
 
-The raw data sets were cleaned with R[@citeR], Tidyverse[@citeTidyverse], Lubridate[@citeLubridate]. Since the inflation rate and interest rate do not change everyday, the NASDAQ index price and Bitcoin price need to be analyzed in quarterly data. The  
+The raw data sets were cleaned with R[@citeR], Tidyverse[@citeTidyverse], Lubridate[@citeLubridate]. Since the inflation rate and interest rate do not change frequently, the NASDAQ index price and Bitcoin price need to be analyzed in quarterly data. The collected daily raw NASDAQ index and Bitcoin price could be converted to quarter data by Lubridate[@citeLubridate] package.
 
 ## Variables in interest
 
-The study focuses on the correlation between the inflation rate and the interest rate in Canada, and how they impact on the stock market and cryptocurrency price. The interest variables in this study
+The study focuses on the correlation between the inflation rate and the interest rate in Canada, and how they impact on the stock market and cryptocurrency price. The interest variables in this study are 'CPI inflation rate', 'interest rate', 'NASDAQ index close price', and 'Bitcoin close price'. 
+Note that 'CPI inflation rate' and 'interest rate' do not fluctuate as often as other variables. Thus, the study will focus on the quarter data rather than other periods.
 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+Below tables are examples of the cleaned data sets
 
 ```{r}
-#| label: fig-bills
+#| label: Summary of each variable
 #| fig-cap: Bills of penguins
 #| echo: false
 

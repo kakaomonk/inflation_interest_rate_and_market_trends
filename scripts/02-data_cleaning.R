@@ -1,44 +1,61 @@
 #### Preamble ####
-# Purpose: Cleans the raw plane data recorded by two observers..... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 6 April 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Cleans the raw data sets (Daily, Montly) to Quarter data set
+# Author: Hyungsoo Park
+# Date: 13 April 2024
+# Contact: Hyungsoo Park
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
 
 #### Workspace setup ####
 library(tidyverse)
 
-#### Clean data ####
-raw_data <- read_csv("inputs/data/plane_data.csv")
+raw_inflation = read_csv("data/raw_data/INDINF_LOWTARGET,INDINF_UPPTARGET,INDINF_CPI_M-sd-2014-06-29-ed-2024-03-02.csv", skip = 10) # skip first 10 rows that contain description
+raw_interest = read_csv("data/raw_data/Candian_Interest_Rate.csv", skip = 10)
+raw_nas = read_csv("data/raw_data/NASDAQ_Historical.csv")
+raw_btc = read_csv("data/raw_data/BTC-USD.csv")
 
-cleaned_data <-
-  raw_data |>
-  janitor::clean_names() |>
-  select(wing_width_mm, wing_length_mm, flying_time_sec_first_timer) |>
-  filter(wing_width_mm != "caw") |>
-  mutate(
-    flying_time_sec_first_timer = if_else(flying_time_sec_first_timer == "1,35",
-                                   "1.35",
-                                   flying_time_sec_first_timer)
-  ) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "490",
-                                 "49",
-                                 wing_width_mm)) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "6",
-                                 "60",
-                                 wing_width_mm)) |>
-  mutate(
-    wing_width_mm = as.numeric(wing_width_mm),
-    wing_length_mm = as.numeric(wing_length_mm),
-    flying_time_sec_first_timer = as.numeric(flying_time_sec_first_timer)
-  ) |>
-  rename(flying_time = flying_time_sec_first_timer,
-         width = wing_width_mm,
-         length = wing_length_mm
-         ) |> 
-  tidyr::drop_na()
+# Chnage Daily data to Quarter data
+quar_nas = read_csv("data/raw_data/NASDAQ_Historical.csv")
+quar_nas$Date <- ymd(quar_nas$Date)
+quar_nas$Quarter <- paste0(year(quar_nas$Date), " Q", quarter(quar_nas$Date))
 
-#### Save data ####
-write_csv(cleaned_data, "outputs/data/analysis_data.csv")
+cleaned_nas <- quar_nas |>
+  group_by(Quarter) |>
+  summarise(Close = mean(Close))
+
+# Write csv
+write_csv(cleaned_nas, "data/analysis_data/cleaned_nas.csv")
+
+# Change Daily data to Quarter data
+quar_btc = read_csv("data/raw_data/BTC-USD.csv")
+quar_btc$Date <- ymd(quar_btc$Date)
+quar_btc$Quarter <- paste0(year(quar_btc$Date), " Q", quarter(quar_btc$Date))
+
+cleaned_btc <- quar_btc |>
+  group_by(Quarter) |>
+  summarise(Close = mean(Close))
+
+write_csv(cleaned_nas, "data/analysis_data/cleaned_btc.csv")
+
+# Clean Inflation rate dataset
+quar_inflation = read_csv("data/raw_data/INDINF_LOWTARGET,INDINF_UPPTARGET,INDINF_CPI_M-sd-2014-06-29-ed-2024-03-02.csv", skip = 10) # skip first 10 rows that contain description
+quar_inflation$date <- ymd(quar_inflation$date)
+quar_inflation$Quarter <- paste0(year(quar_inflation$date), " Q", quarter(quar_inflation$date))
+
+cleaned_inflation <- quar_inflation |>
+  group_by(Quarter) |>
+  summarise(Inflation = mean(INDINF_CPI_M))
+# Write cleaned inflation dataset
+write_csv(cleaned_inflation, "data/analysis_data/cleaned_inflation.csv")
+
+# Clean Interest rate dataset
+quar_interest = read_csv("data/raw_data/Candian_Interest_Rate.csv", skip = 10)
+quar_interest$Date <- ym(quar_interest$Date)
+quar_interest$Quarter <- paste0(year(quar_interest$Date), " Q", quarter(quar_interest$Date))
+
+cleaned_interest <- quar_interest |>
+  group_by(Quarter) |>
+  summarise(Interest = mean(V122530))
+
+write_csv(cleaned_interest, "data/analysis_data/cleaned_inflation.csv")
+
+
