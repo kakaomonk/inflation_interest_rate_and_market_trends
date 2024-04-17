@@ -20,7 +20,9 @@ quar_nas$Quarter <- paste0(year(quar_nas$Date), " Q", quarter(quar_nas$Date))
 
 cleaned_nas <- quar_nas |>
   group_by(Quarter) |>
-  summarise(Close = mean(Close))
+  summarise(NASDAQ_close = mean(Close)) |>
+  slice(-n()) |>
+  slice(-n())
 
 # Write csv
 write_csv(cleaned_nas, "data/analysis_data/cleaned_nas.csv")
@@ -32,7 +34,9 @@ quar_btc$Quarter <- paste0(year(quar_btc$Date), " Q", quarter(quar_btc$Date))
 
 cleaned_btc <- quar_btc |>
   group_by(Quarter) |>
-  summarise(Close = mean(Close))
+  summarise(Bitcoin_close = mean(Close)) |>
+  slice(-n()) |>
+  slice(-n())
 
 # Write cleaned inflation data set
 write_csv(cleaned_nas, "data/analysis_data/cleaned_btc.csv")
@@ -44,7 +48,9 @@ quar_inflation$Quarter <- paste0(year(quar_inflation$date), " Q", quarter(quar_i
 
 cleaned_inflation <- quar_inflation |>
   group_by(Quarter) |>
-  summarise(Inflation = mean(INDINF_CPI_M))
+  summarise(Inflation = mean(INDINF_CPI_M)) |>
+  slice(-n())
+
 # Write cleaned inflation data set
 write_csv(cleaned_inflation, "data/analysis_data/cleaned_inflation.csv")
 
@@ -55,9 +61,17 @@ quar_interest$Quarter <- paste0(year(quar_interest$Date), " Q", quarter(quar_int
 
 cleaned_interest <- quar_interest |>
   group_by(Quarter) |>
-  summarise(Interest = mean(V122530))
+  summarise(Interest = mean(V122530)) |>
+  slice(-c(1, n()))
 
 # Write cleaned inflation data set
 write_csv(cleaned_interest, "data/analysis_data/cleaned_interest.csv")
 
+# Combine all dataset
+all_cleaned <- cleaned_inflation |>
+  inner_join(cleaned_interest, by = "Quarter") |>
+  inner_join(cleaned_nas, by = "Quarter") |>
+  inner_join(cleaned_btc, by = "Quarter")
 
+# Write combined cleaned data set
+write_csv(all_cleaned, "data/analysis_data/all_cleaned.csv")

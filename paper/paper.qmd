@@ -32,7 +32,7 @@ In this paper
 
 You can and should cross-reference sections and sub-sections. We use @citeR and @rohan.
 
-The remainder of this paper is structured as follows. @sec-data....
+Furthermore, @sec-data explains the data cleaning process and variables of interest that are the most important factor of this research.
 
 
 
@@ -48,17 +48,14 @@ The major 4 data sets in this research are "historical inflation rate in Canada"
 #| warning: false
 #| message: false
 
-cleaned_inflation = read_csv(here("data/analysis_data/cleaned_inflation.csv"))
-cleaned_interest = read_csv(here("data/analysis_data/cleaned_interest.csv"))
-cleaned_nas = read_csv(here("data/analysis_data/cleaned_nas.csv"))
-cleaned_btc = read_csv(here("data/analysis_data/cleaned_btc.csv"))
+all_cleaned = read_csv(here("data/analysis_data/all_cleaned.csv"))
 ```
 
 The raw data sets were cleaned with R[@citeR], Tidyverse[@citeTidyverse], Lubridate[@citeLubridate]. Since the inflation rate and interest rate do not change frequently, the NASDAQ index price and Bitcoin price need to be analyzed in quarterly data. The collected daily raw NASDAQ index and Bitcoin price could be converted to quarter data by Lubridate[@citeLubridate] package.
 
-## Variables in interest
+## Variables of interest
 
-The study focuses on the correlation between the inflation rate and the interest rate in Canada, and how they impact on the stock market and cryptocurrency price. The interest variables in this study are 'CPI inflation rate', 'interest rate', 'NASDAQ index close price', and 'Bitcoin close price'. 
+The study focuses on the correlation between the inflation rate and the interest rate in Canada, and how they impact on the stock market and cryptocurrency price. The variables of interest in this study are 'CPI inflation rate', 'interest rate', 'NASDAQ index close price', and 'Bitcoin close price'. 
 Note that 'CPI inflation rate' and 'interest rate' do not fluctuate as often as other variables. Thus, the study will focus on the quarter data rather than other periods.
 
 Below tables[@tbl-cleaneddataexamples] are examples of the cleaned data sets.
@@ -70,38 +67,27 @@ Below tables[@tbl-cleaneddataexamples] are examples of the cleaned data sets.
 #| tbl-cap: "Example of Cleaned data sets"
 #| warning: false
 
-kable(cleaned_inflation)
-kable(cleaned_interest)
-kable(cleaned_nas)
-kable(cleaned_btc)
+kable(all_cleaned)
 ```
 
+According to [@tbl-cleaneddataexamples], all variables of interest are cleaned and combined properly by each quarter from the thrid quarter in 2014 to the fourth quarter of 2023.
 
 ```{r}
-#| label: Summary of each variable
-#| fig-cap: Bills of penguins
-#| echo: false
-
-```
-
-
-```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
+#| label: fig-rates
+#| fig-cap: Relationship between Inflation and Interest rate
 #| echo: false
 #| warning: false
 #| message: false
 
-
+ggplot(all_cleaned) +
+  geom_bar()
 ```
 
-Talk way more about it. 
+### Note
+The inflation rate and interest rate do not change as often as NASDAQ index and cryptocurrency, and the fluctuations are not severe compare to the others. On the other hand, there is a open time and close time for the stock market, but there cryptocurrency market never closes.
 
-
-
-# Model
-
-The goal of our modelling strategy is twofold. Firstly,...
+# Model {#sec-model}
+First of all, the 
 
 Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
 
@@ -128,7 +114,7 @@ We expect a positive relationship between the size of the wings and time spent a
 We can use maths by including latex between dollar signs, for instance $\theta$.
 
 
-# Results
+# Results {#sec-results}
 
 Our results are summarized in @tbl-modelresults.
 
@@ -163,7 +149,7 @@ library(rstanarm)
 
 
 
-# Discussion
+# Discussion {#sec-discussion}
 
 ## First discussion point {#sec-first-point}
 
