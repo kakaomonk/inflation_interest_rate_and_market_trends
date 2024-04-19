@@ -28,17 +28,16 @@ library(lubridate)
 
 # Introduction
 
-Throughout last few years, the inflation rate and the interest rate have been increased rampantly after pandemic, and every government tried to control the inflation rate and interest rate, but it requires a long duration to stabilize the inflation rate and interest rate since those are related to almost all factors in economy. According to... @citezzzzzz[], stabilizing the rate would take for a while.
+Throughout last few years, the inflation rate and the interest rate have been increased rampantly after pandemic, and every government tried to control the inflation rate and interest rate, but it requires a long duration to stabilize the inflation rate and interest rate since those are related to almost all factors in economy. According to @citeInflationreturn, stabilizing the inflation and interest rateswould take for a while. However, the rates will be stabilized gradually.
 
-In this paper
-
+In this paper, we explore the relationship between inflation and interest rates and what and how both rates affect the global economy, especially in 'the stock market' and 'the cryptocurrency market.
 
 Furthermore, @sec-data explains the data cleaning process and variables of interest that are the most important factor of this research. @sec-model explains the models that were built for this paper. @sec-results considers and describe the results from the models. @sec-discussion explain the results in three different perspectives and the weakness of the paper.
 
 
 # Data {#sec-data}
 
-The major 4 data sets in this research are "historical inflation rate in Canada"[@citeInflation], "historical interest rate in Canada"[@citeInterest], "historical NASDAQ index price"[@citeNasdaq], and "historical Bitcoin price"[@citeBitcoin]. The raw historical inflation data contains the quarterly inflation rate in Canada in the last 10 years. The raw historical interest rate contains the monthly interest rates in Canada's last 10 years. In the case of the data sets containing the NASDAQ index and Bitcoin price containing the monthly price data of each index.
+The processes in this section were done by using R[@citeR], Tidyverse[@citeTidyverse], Lubridate[@citeLubridate], Arrow[@citeArrow]. The major 4 data sets in this research are "historical inflation rate in Canada"[@citeInflation], "historical interest rate in Canada"[@citeInterest], "historical NASDAQ index price"[@citeNasdaq], and "historical Bitcoin price"[@citeBitcoin]. The raw historical inflation data contains the quarterly inflation rate in Canada in the last 10 years. The raw historical interest rate contains the monthly interest rates in Canada's last 10 years. In the case of the data sets containing the NASDAQ index and Bitcoin price containing the monthly price data of each index.
 
 
 ## Data Cleaning
@@ -51,7 +50,7 @@ The major 4 data sets in this research are "historical inflation rate in Canada"
 all_cleaned = read_parquet(here("data/analysis_data/all_cleaned.parquet"))
 ```
 
-The raw data sets were cleaned with R[@citeR], Tidyverse[@citeTidyverse], and Lubridate[@citeLubridate]. Since the inflation rate and interest rate do not change frequently, the NASDAQ index price and Bitcoin price need to be analyzed in quarterly data. The collected daily raw NASDAQ index and Bitcoin price could be converted to quarter data by Lubridate[@citeLubridate] package.
+The raw data sets were cleaned with R[@citeR], Tidyverse[@citeTidyverse], Lubridate[@citeLubridate], and Arrow[@citeArrow]. Since the inflation rate and interest rate do not change frequently, the NASDAQ index price and Bitcoin price need to be analyzed in quarterly data. The collected daily raw NASDAQ index and Bitcoin price could be converted to quarter data by Lubridate[@citeLubridate] package.
 
 ## Variables of interest
 
@@ -183,7 +182,7 @@ modelsummary::modelsummary(
 
 # Discussion {#sec-discussion}
 
-As a result, the research considered the inflation rate and interest rate affected to both market. However, results for each market are quiet different by both each predictor.
+As a result, the research considered the inflation rate and interest rate affected to both market. However, results for each market are quiet different from our expectation by both each predictor. In this section, we will discussion about the reason why the results are different from our expectation.
 
 ## NASDAQ Index {#sec-first-point}
 
@@ -214,8 +213,17 @@ From early 2021, the COVID-19 pandemic affected many factors in the economy. Eve
 ## Weaknesses and next steps
 
 The study focused on inflation and interest rates to explore the stock market (NASDAQ index price) and the cryptocurrency market (Bitcoin). However, other factors also affect the markets, such as cash liquidity. In addition, both the stock market and the cryptocurrency market are affected by many policy changes. Also, there will be a number of regulations for cryptocurrency since the cryptocurrency market is a new means of investment. 
+\newpage
+
+\appendix
+
+# Appendix {-}
+
+# Additional data details
 
 \newpage
+
+
 # References
 
 
