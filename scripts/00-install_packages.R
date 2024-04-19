@@ -1,6 +1,6 @@
 #### Preamble ####
 # Purpose: Installs all packages for the 
-# Author: Rohan Alexander [...UPDATE THIS...]
+# Author: Hyungsoo Park
 # Date: 11 February 2023 [...UPDATE THIS...]
 # Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
 # License: MIT

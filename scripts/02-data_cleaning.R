@@ -25,9 +25,6 @@ cleaned_nas <- quar_nas |>
   slice(-n()) |>
   slice(-n())
 
-# Write csv
-write_csv(cleaned_nas, "data/analysis_data/cleaned_nas.csv")
-
 # Change Daily data to Quarter data
 quar_btc = read_csv("data/raw_data/BTC-USD.csv")
 quar_btc$Date <- ymd(quar_btc$Date)
@@ -39,9 +36,6 @@ cleaned_btc <- quar_btc |>
   slice(-n()) |>
   slice(-n())
 
-# Write cleaned inflation data set
-write_csv(cleaned_nas, "data/analysis_data/cleaned_btc.csv")
-
 # Clean Inflation rate dataset
 quar_inflation = read_csv("data/raw_data/INDINF_LOWTARGET,INDINF_UPPTARGET,INDINF_CPI_M-sd-2014-06-29-ed-2024-03-02.csv", skip = 10) # skip first 10 rows that contain description
 quar_inflation$date <- ymd(quar_inflation$date)
@@ -52,9 +46,6 @@ cleaned_inflation <- quar_inflation |>
   summarise(Inflation = mean(INDINF_CPI_M)) |>
   slice(-n())
 
-# Write cleaned inflation data set
-write_csv(cleaned_inflation, "data/analysis_data/cleaned_inflation.csv")
-
 # Clean Interest rate dataset
 quar_interest = read_csv("data/raw_data/Candian_Interest_Rate.csv", skip = 10)
 quar_interest$Date <- ym(quar_interest$Date)
@@ -64,9 +55,6 @@ cleaned_interest <- quar_interest |>
   group_by(Quarter) |>
   summarise(Interest = mean(V122530)) |>
   slice(-c(1, n()))
-
-# Write cleaned inflation data set
-write_csv(cleaned_interest, "data/analysis_data/cleaned_interest.csv")
 
 # Create a column of dates for each quarter manually 
 Date = c(as.Date("2014-07-01"), as.Date("2014-10-01"), 
@@ -86,8 +74,7 @@ all_cleaned <- cleaned_inflation |>
   inner_join(cleaned_interest, by = "Quarter") |>
   inner_join(cleaned_nas, by = "Quarter") |>
   inner_join(cleaned_btc, by = "Quarter") |>
-  mutate(date)
-
+  mutate(Date)
 
 
 # Write combined cleaned data set

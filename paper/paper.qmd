@@ -22,6 +22,7 @@ library(tidyverse)
 library(knitr)
 library(here)
 library(arrow)
+library(lubridate)
 ```
 
 
@@ -31,15 +32,13 @@ Throughout last few years, the inflation rate and the interest rate have been in
 
 In this paper
 
-You can and should cross-reference sections and sub-sections. We use @citeR and @rohan.
 
-Furthermore, @sec-data explains the data cleaning process and variables of interest that are the most important factor of this research.
-
+Furthermore, @sec-data explains the data cleaning process and variables of interest that are the most important factor of this research. @sec-model explains the models that were built for this paper. @sec-results considers and describe the results from the models. @sec-discussion explain the results in three different perspectives and the weakness of the paper.
 
 
 # Data {#sec-data}
 
-The major 4 data sets in this research are "historical inflation rate in Canada"[@citeInflation], "historical interest rate in Canada"[@citeInterest], "historical NASDAQ index price"[@citeNasdaq], and "historical Bitcoin price"[@citeBitcoin]. The raw historical inflation data contains quarterly inflation rate in Canada last 10 years. The raw historical interest rate contains montly interest rate in Canada last 10 years. In case of the data sets contain NASDAQ index and Bitcoin price contain monthly price data of each index.
+The major 4 data sets in this research are "historical inflation rate in Canada"[@citeInflation], "historical interest rate in Canada"[@citeInterest], "historical NASDAQ index price"[@citeNasdaq], and "historical Bitcoin price"[@citeBitcoin]. The raw historical inflation data contains the quarterly inflation rate in Canada in the last 10 years. The raw historical interest rate contains the monthly interest rates in Canada's last 10 years. In the case of the data sets containing the NASDAQ index and Bitcoin price containing the monthly price data of each index.
 
 
 ## Data Cleaning
@@ -52,14 +51,15 @@ The major 4 data sets in this research are "historical inflation rate in Canada"
 all_cleaned = read_parquet(here("data/analysis_data/all_cleaned.parquet"))
 ```
 
-The raw data sets were cleaned with R[@citeR], Tidyverse[@citeTidyverse], Lubridate[@citeLubridate]. Since the inflation rate and interest rate do not change frequently, the NASDAQ index price and Bitcoin price need to be analyzed in quarterly data. The collected daily raw NASDAQ index and Bitcoin price could be converted to quarter data by Lubridate[@citeLubridate] package.
+The raw data sets were cleaned with R[@citeR], Tidyverse[@citeTidyverse], and Lubridate[@citeLubridate]. Since the inflation rate and interest rate do not change frequently, the NASDAQ index price and Bitcoin price need to be analyzed in quarterly data. The collected daily raw NASDAQ index and Bitcoin price could be converted to quarter data by Lubridate[@citeLubridate] package.
 
 ## Variables of interest
 
-The study focuses on the correlation between the inflation rate and the interest rate in Canada, and how they impact on the stock market and cryptocurrency price. The variables of interest in this study are 'CPI inflation rate', 'interest rate', 'NASDAQ index close price', and 'Bitcoin close price'. 
-Note that 'CPI inflation rate' and 'interest rate' do not fluctuate as often as other variables. Thus, the study will focus on the quarter data rather than other periods.
+The study focuses on the correlation between the inflation rate and the interest rate in Canada and how they impact the stock market and cryptocurrency prices. The variables of interest in this study are 'CPI inflation rate', 'interest rate', 'NASDAQ index close price', and 'Bitcoin close price'.
 
-Below tables[@tbl-cleaneddataexamples] are examples of the cleaned data sets.
+Note that the 'CPI inflation rate' and 'interest rate' do not fluctuate as often as other variables. Thus, the study will focus on the quarter data rather than other periods.
+
+The below tables[@tbl-cleaneddataexamples] are examples of the cleaned data sets.
 
 ```{r}
 #| echo: false
@@ -71,7 +71,7 @@ Below tables[@tbl-cleaneddataexamples] are examples of the cleaned data sets.
 kable(all_cleaned)
 ```
 
-According to [@tbl-cleaneddataexamples], all variables of interest are cleaned and combined properly by each quarter from the thrid quarter in 2014 to the fourth quarter of 2023.
+According to [@tbl-cleaneddataexamples], all variables of interest are cleaned and appropriately combined by each quarter from the third quarter in 2014 to the fourth quarter of 2023.
 
 ```{r}
 #| label: fig-rates
@@ -81,49 +81,59 @@ According to [@tbl-cleaneddataexamples], all variables of interest are cleaned a
 #| message: false
 
 ggplot(all_cleaned, aes(x = Date)) +
-  geom_line(aes(y = Inflation), color = 'red') +
-  geom_line(aes(y = Interest), color = 'blue') +
-  labs(title = "Relationship between Inflation and Interest rate",
-       x = "Period", y = 'Rate(%)')
-
+  geom_line(aes(y = Inflation), color = 'orange') +
+  geom_line(aes(y = Interest), color = 'blue')
 ```
-According to the graph the fluctuation of both factors are similar last 10 years, so 
 
+According to [@citeInterestinflation], higher interest rates affect inflation rates. Based on the collected historical data, [@fig-rates] shows that the fluctuation of both factors has been similar over the last 10 years. The orange line represents the 'Inflation rate', and the blue line represents the 'Interest rate'. In addition, both rates significantly increased from 2021, the end of the COVID-19 pandemic.  
+
+```{r}
+#| label: fig-prices
+#| fig-cap: Recent trends of NASDAQ index and Cryptocurrency (Bitcoin)
+#| echo: false
+#| warning: false
+#| message: false
+
+ggplot(all_cleaned, aes(x = Date)) +
+  geom_line(aes(y = NASDAQ_close), color = 'green') +
+  geom_line(aes(y = Bitcoin_close), color = 'red')
+```
+
+According to the @fig-prices, both the NASDAQ index and cryptocurrency (Bitcoin) have increased significantly in the past 10 years. 
 
 ### Note
-The inflation rate and interest rate do not change as often as NASDAQ index and cryptocurrency, and the fluctuations are not severe compare to the others. On the other hand, there is a open time and close time for the stock market, but there cryptocurrency market never closes.
+
+The inflation rate and interest rate do not change as often as the NASDAQ index and cryptocurrency, and the fluctuations are not severe compared to the others. On the other hand, there is an open time and a close time for the stock market, but the cryptocurrency market never closes.
+
+\newpage
 
 # Model {#sec-model}
-First of all, the 
 
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
+First of all, the built models were based on the fluctuation of the inflation rate and interest rate.
+
 
 ## Model set-up
 
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
+Define $y_i$ as a price of NASDAQ Index and Cryptocurrecy (Bitcoin) price($). Let $\beta_1$ is inflation rate and $\beta_2$ be interest rate(%). 
 
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
+\begin{align}
+y_{NASDAQ} &= \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
 \end{align}
 
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
+\begin{align}
+y_{Bitcoin} &= \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
+\end{align}
+
+The models were run in R [@citeR] by using 'rstanarm' [@rstanarm].
 
 
 ### Model justification
 
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
-
-We can use maths by including latex between dollar signs, for instance $\theta$.
-
+We expected that the inflation rate and interest rate would have a negative correlation with the NASDAQ Index and Bitcoin price since the market volume would decrease when the inflation rate and interest rate are high. However, we did not consider that the stock market and cryptocurrency market are still becoming larger and larger.
 
 # Results {#sec-results}
 
-Our results are summarized in @tbl-modelresults.
+The results of models are in @tbl-nas-modelresults and @tbl-btc-modelresults.
 
 ```{r}
 #| echo: false
@@ -133,107 +143,79 @@ Our results are summarized in @tbl-modelresults.
 
 library(rstanarm)
 
-#first_model <-
-#  readRDS(file = here::here("models/first_model.rds"))
+nas_model <- readRDS(file = here::here("models/nas_model.rds"))
+btc_model <- readRDS(file = here::here("models/bitcoin_model.rds"))
 ```
 
 ```{r}
 #| echo: false
 #| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
+#| label: tbl-nas-modelresults
+#| tbl-cap: "Model result of NASDAQ Index by Inflation and Interest Rate"
 #| warning: false
 
-#modelsummary::modelsummary(
-#  list(
-#    "First model" = first_model
-#  ),
-#  statistic = "mad",
-#  fmt = 2
-#)
+modelsummary::modelsummary(
+  list(
+    "NASDAQ index model" = nas_model
+  ),
+  statistic = "mad",
+  fmt = 2
+)
 ```
 
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-btc-modelresults
+#| tbl-cap: "Model result of Cryptocurrency (Bitcoin) by Inflation and Interest Rate"
+#| warning: false
 
+modelsummary::modelsummary(
+  list(
+    "Cryptocurrency (Bitcoin) model" = btc_model
+  ),
+  statistic = "mad",
+  fmt = 2
+)
+```
 
+\newpage
 
 # Discussion {#sec-discussion}
 
-## First discussion point {#sec-first-point}
+As a result, the research considered the inflation rate and interest rate affected to both market. However, results for each market are quiet different by both each predictor.
 
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
+## NASDAQ Index {#sec-first-point}
 
-## Second discussion point
+According to the result, NASDAQ index price has a positive relationship with both of the inflation rate ($1055.52$[@tbl-nas-modelresults]) and the interest rate ($249.52$[@tbl-nas-modelresults]). We expected the relationship between the NASDAQ index price and the rates is a negative relationship since increasing of the inflation rate and the interest rate usually causes ecnomic recession. We expect that the cause of this relationship the stock market is still becoming larger. 
 
-## Third discussion point
+## Bitcoin
+
+According to @citeBenzinga, cryptocurrency (Bitcoin) may be a good hedge against inflation. However, it is pretty new to the market, which means the cryptocurrency market is pretty volatile, which means there might be more critical invisible factors that affect to the market. As a result, from the model, the 'interest rate' has a positive relationship to the Bitcoin price ($5548.11$[@tbl-btc-modelresults]), which is much higher than inflation's result. In case of, the predicator 'inflation rate' has a negative relationship ($-1020.61$[@tbl-btc-modelresults]) with Bitcoin price. This might be cause the cryptocurrency market has yet to be stabilized since it is a new market that has become popular in society. However, the future result of the model should be similar to the NASDAQ Index model's result when the cryptocurrecny market is more stabilized.
+
+## COVID-19
+
+```{r}
+#| label: fig-interest-from-2019
+#| fig-cap: Interest rate from 2019
+#| echo: false
+#| warning: false
+#| message: false
+
+interest_from_2019 <- all_cleaned |>
+  filter(ymd(Date) > ymd("2018-12-31"))
+
+ggplot(interest_from_2019, aes(x = Date)) +
+  geom_line(aes(y = Interest), color = 'blue')
+```
+
+From early 2021, the COVID-19 pandemic affected many factors in the economy. Eventually, this caused sudden variability in stock market and cryptocurrency market, and many governments tried to decrease the interest rate (@fig-interest-from-2019). Decreasing interest rate caused increasing inflation rate, and it caused a chain of inflation.
 
 ## Weaknesses and next steps
 
-Weaknesses and next steps should also be included.
+The study focused on inflation and interest rates to explore the stock market (NASDAQ index price) and the cryptocurrency market (Bitcoin). However, other factors also affect the markets, such as cash liquidity. In addition, both the stock market and the cryptocurrency market are affected by many policy changes. Also, there will be a number of regulations for cryptocurrency since the cryptocurrency market is a new means of investment. 
 
 \newpage
-
-\appendix
-
-# Appendix {-}
-
-
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
-
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
-
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
-
-```{r}
-#| eval: true
-#| echo: false
-#| message: false
-#| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
-
-#pp_check(first_model) +
-#  theme_classic() +
-#  theme(legend.position = "bottom")
-
-#posterior_vs_prior(first_model) +
-#  theme_minimal() +
-#  scale_color_brewer(palette = "Set1") +
-#  theme(legend.position = "bottom") +
-#  coord_flip()
-```
-
-## Diagnostics
-
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
-
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
-
-```{r}
-#| echo: false
-#| eval: true
-#| message: false
-#| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
-
-#plot(first_model, "trace")
-
-#plot(first_model, "rhat")
-```
-
-
-
-\newpage
-
-
 # References
 
 
