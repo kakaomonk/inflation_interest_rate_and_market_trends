@@ -19,6 +19,7 @@ quar_nas = read_csv("data/raw_data/NASDAQ_Historical.csv")
 quar_nas$Date <- ymd(quar_nas$Date)
 quar_nas$Quarter <- paste0(year(quar_nas$Date), " Q", quarter(quar_nas$Date))
 
+# Merge them into cleaned data and cut unnecessary rows
 cleaned_nas <- quar_nas |>
   group_by(Quarter) |>
   summarise(NASDAQ_close = mean(Close)) |>
@@ -30,6 +31,7 @@ quar_btc = read_csv("data/raw_data/BTC-USD.csv")
 quar_btc$Date <- ymd(quar_btc$Date)
 quar_btc$Quarter <- paste0(year(quar_btc$Date), " Q", quarter(quar_btc$Date))
 
+# Merge them into cleaned data and cut unnecessary rows
 cleaned_btc <- quar_btc |>
   group_by(Quarter) |>
   summarise(Bitcoin_close = mean(Close)) |>
@@ -41,6 +43,7 @@ quar_inflation = read_csv("data/raw_data/INDINF_LOWTARGET,INDINF_UPPTARGET,INDIN
 quar_inflation$date <- ymd(quar_inflation$date)
 quar_inflation$Quarter <- paste0(year(quar_inflation$date), " Q", quarter(quar_inflation$date))
 
+# Merge them into cleaned data and cut unnecessary rows
 cleaned_inflation <- quar_inflation |>
   group_by(Quarter) |>
   summarise(Inflation = mean(INDINF_CPI_M)) |>
@@ -51,6 +54,7 @@ quar_interest = read_csv("data/raw_data/Candian_Interest_Rate.csv", skip = 10)
 quar_interest$Date <- ym(quar_interest$Date)
 quar_interest$Quarter <- paste0(year(quar_interest$Date), " Q", quarter(quar_interest$Date))
 
+# Merge them into cleaned data and cut unnecessary rows
 cleaned_interest <- quar_interest |>
   group_by(Quarter) |>
   summarise(Interest = mean(V122530)) |>
